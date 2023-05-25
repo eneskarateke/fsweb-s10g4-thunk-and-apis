@@ -9,6 +9,13 @@ function FavItem({ activity, id }) {
 
   const removeFavHandler = () => {
     dispatch(removeFav(id));
+    removeFavFromLocalStorage(id);
+  };
+
+  const removeFavFromLocalStorage = (id) => {
+    const storedFavs = JSON.parse(localStorage.getItem("s10g4"));
+    const updatedFavs = storedFavs.filter((fav) => fav.id !== id);
+    localStorage.setItem("s10g4", JSON.stringify(updatedFavs));
   };
 
   return (

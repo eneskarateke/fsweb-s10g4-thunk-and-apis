@@ -18,7 +18,6 @@ export default function App() {
   const loading = useSelector((store) => store.loading);
   const current = useSelector((store) => store.current);
   const favs = useSelector((store) => store.favs);
-  const errors = useSelector((store) => store.errors);
 
   const dispatch = useDispatch();
 
@@ -27,13 +26,6 @@ export default function App() {
     dispatch(getFavsFromLocalStorage());
   }, [dispatch]);
 
-  // function addToFavs(current) {
-  //   if (current) {
-  //     dispatch(addFav(current));
-  //     toast.success("Günün aktivitesi favorilere eklendi!");
-  //     dispatch(fetchAnother());
-  //   }
-  // }
   function addToFavs(current) {
     if (current) {
       const isExisting = favs.some((fav) => fav.activity === current.activity);
@@ -51,6 +43,9 @@ export default function App() {
       }
     }
   }
+  const resetLocalStorage = () => {
+    localStorage.removeItem("s10g4");
+  };
 
   function newFetch() {
     dispatch(fetchAnother());
@@ -110,6 +105,13 @@ export default function App() {
                 Henüz bir favoriniz yok
               </div>
             )}
+
+            <button
+              onClick={() => resetLocalStorage()}
+              className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white"
+            >
+              Favorileri hafızadan sil!
+            </button>
           </div>
         </Route>
       </Switch>
