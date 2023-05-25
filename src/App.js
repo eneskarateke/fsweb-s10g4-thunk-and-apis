@@ -58,7 +58,6 @@ export default function App() {
 
   const removeAllFavs = () => {
     dispatch(resetFavs());
-    resetLocalStorage();
   };
 
   return (

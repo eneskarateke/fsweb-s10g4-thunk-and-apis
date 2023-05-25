@@ -75,7 +75,6 @@ export function myReducer(state = initial, action) {
         return state;
       }
     case RESET_FAVS:
-      writeFavsToLocalStorage({ ...state, favs: [] });
       return {
         ...state,
         favs: [],
