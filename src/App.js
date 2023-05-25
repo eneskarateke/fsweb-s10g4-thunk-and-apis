@@ -26,6 +26,11 @@ export default function App() {
 
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(fetchAnother());
+  //   dispatch(getFavsFromLocalStorage());
+  // }, []);
+
   useEffect(() => {
     dispatch(fetchAnother());
     dispatch(getFavsFromLocalStorage());
@@ -85,7 +90,7 @@ export default function App() {
           {loading && (
             <div className="bg-white p-6 text-center shadow-md">YÜKLENİYOR</div>
           )}
-          {current && <Item data={current} />}
+          {current && !loading && <Item data={current} />}
 
           <div className="flex gap-3 justify-end py-3">
             <button
