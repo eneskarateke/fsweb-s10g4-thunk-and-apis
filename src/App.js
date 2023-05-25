@@ -5,6 +5,8 @@ import FavItem from "./components/FavItem";
 import { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { fetchAnother, addFav, getFavsFromLocalStorage } from "./actions";
 
@@ -25,9 +27,28 @@ export default function App() {
     dispatch(getFavsFromLocalStorage());
   }, [dispatch]);
 
+  // function addToFavs(current) {
+  //   if (current) {
+  //     dispatch(addFav(current));
+  //     toast.success("Günün aktivitesi favorilere eklendi!");
+  //     dispatch(fetchAnother());
+  //   }
+  // }
   function addToFavs(current) {
     if (current) {
-      dispatch(addFav(current));
+      const isExisting = favs.some((fav) => fav.activity === current.activity);
+      if (isExisting) {
+        toast.warning("Activity already exists in favorites!");
+      } else {
+        dispatch(addFav(current));
+        const toastId = toast.success("Günün aktivitesi favorilere eklendi!");
+
+        toast.update(toastId, {
+          onClose: () => {
+            dispatch(fetchAnother());
+          },
+        });
+      }
     }
   }
 
@@ -92,6 +113,7 @@ export default function App() {
           </div>
         </Route>
       </Switch>
+      <ToastContainer autoClose={2000} />
     </div>
   );
 }
