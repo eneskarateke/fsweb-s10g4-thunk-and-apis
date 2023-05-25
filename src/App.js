@@ -8,7 +8,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { fetchAnother, addFav, getFavsFromLocalStorage } from "./actions";
+import {
+  fetchAnother,
+  addFav,
+  getFavsFromLocalStorage,
+  resetFavs,
+} from "./actions";
 
 export default function App() {
   // const loading = false;
@@ -50,6 +55,11 @@ export default function App() {
   function newFetch() {
     dispatch(fetchAnother());
   }
+
+  const removeAllFavs = () => {
+    dispatch(resetFavs());
+    resetLocalStorage();
+  };
 
   return (
     <div className="wrapper max-w-xl mx-auto px-4">
@@ -111,6 +121,12 @@ export default function App() {
               className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white"
             >
               Favorileri hafızadan sil!
+            </button>
+            <button
+              onClick={removeAllFavs}
+              className="select-none px-4 py-2 bg-red-700 hover:bg-red-600 text-white"
+            >
+              Tüm Favorileri Sil
             </button>
           </div>
         </Route>
