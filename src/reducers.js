@@ -38,7 +38,11 @@ export function myReducer(state = initial, action) {
       };
 
     case FAV_REMOVE:
-      return state;
+      return {
+        ...state,
+        favs: state.favs.filter((activity) => activity.id !== action.payload),
+      };
+
     case FETCH_LOADING:
       return {
         ...state,
