@@ -2,10 +2,11 @@ import React from "react";
 import { Switch, Route, NavLink } from "react-router-dom";
 import Item from "./components/Item";
 import FavItem from "./components/FavItem";
+import { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { fetchAnother, addFav } from "./actions";
+import { fetchAnother, addFav, getFavsFromLocalStorage } from "./actions";
 
 export default function App() {
   // const loading = false;
@@ -18,6 +19,10 @@ export default function App() {
   const errors = useSelector((store) => store.errors);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFavsFromLocalStorage());
+  }, [dispatch]);
 
   function addToFavs(current) {
     if (current) {

@@ -31,7 +31,7 @@ export function myReducer(state = initial, action) {
         activity: action.payload.activity,
       };
       const updatedFavs = [...state.favs, newFav];
-      // writeFavsToLocalStorage({ ...state, favs: updatedFavs }); // Save updated favorites to localStorage
+      writeFavsToLocalStorage({ ...state, favs: updatedFavs });
       return {
         ...state,
         favs: updatedFavs,
@@ -64,8 +64,15 @@ export function myReducer(state = initial, action) {
         error: action.payload,
       };
     case GET_FAVS_FROM_LS:
-      return state;
-
+      const storedFavs = readFavsFromLocalStorage();
+      if (storedFavs) {
+        return {
+          ...state,
+          favs: storedFavs,
+        };
+      } else {
+        return state;
+      }
     default:
       return state;
   }
